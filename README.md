@@ -7,11 +7,19 @@
 #### 软件架构
 软件架构说明
 1、后端
+
+
+
 2020-06-01
 为了对已有项目有个更好的练习，对项目添加新接口，新功能
 创建StatisticAop，StatisticService等接口方法，对redis的hashmap，set集合等使用
 
 在原有基础上添加浏览量等信息用redis处理减少磁盘IO
+
+
+
+
+
 
 
 核心框架：Spring Boot
