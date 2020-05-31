@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootdo.article.dao.StatisticDao">
+
+    <resultMap id="BaseResultMap" type="com.bootdo.article.domain.StatisticDo" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="news_id" property="newsId" jdbcType="INTEGER" />
+        <result column="click_date" property="clickDate" jdbcType="DATE" />
+        <result column="times" property="times" jdbcType="INTEGER" />
+        <result column="operate_time" property="operateTime" jdbcType="DATE" />
+    </resultMap>
+
+<!--    <select id="statisticsPageViews" parameterType="hashMap" resultType="int">-->
+<!--        select times from statistics_page_views-->
+<!--        <where>-->
+<!--            <if test="id != null and id != '' "> id = #{id} </if>-->
+<!--            <if test="url != null and url != '' "> url = #{url} </if>-->
+<!--            <if test="news_id != null and news_id != '' "> news_id = #{news_id} </if>-->
+<!--        </where>-->
+<!--    </select>-->
+    <insert id="save" parameterType="com.bootdo.article.domain.StatisticDo" useGeneratedKeys="true" keyProperty="id">
+        insert
+        into
+        statistics_view
+    (
+    url,
+    news_id,
+    click_date,
+    times,
+    operate_time
+    )values
+    (
+    #{url},
+    #{newsId},
+    #{clickDate},
+    #{times},
+    #{operateTime}
+    )
+   </insert>
+
+    <update id="update">
+        update statistics_view
+        <set>
+            <if test="times != null">`times` = #{times}, </if>
+<!--            <if test="operateTime != null">`operate_time` = #{operateTime}, </if>-->
+<!--            <if test="operateTime != null">`operate_time` = #{operateTime}, </if>-->
+        </set>
+    where
+       url = #{url} and news_id = #{newsId}
+    </update>
+
+    <select id="search" parameterType="hashMap" resultType="int">
+        select times from statistics_view
+        <where>
+            <if test="url and url != null and url != ''">  and url = #{url}</if>
+            <if test="newsId and newsId != null and newsId != ''">  and  news_id = #{newsId}</if>
+<!--            <if test="clickDate and clickDate != null and clickDate != ''"> and  click_date = #{clickDate,jdbcType=DATE}</if>-->
+<!--            <if test="newsId and newsId != null and newsId != ''">  and news_id = #{newsId}</if>-->
+        </where>
+    </select>
+
+    <select id="sqlSearch" parameterType="hashMap" resultType="com.bootdo.article.domain.StatisticDo">
+        select * from statistics_view
+        <where>
+            <if test="url and url != null and url != ''">  and url = #{url}</if>
+            <if test="newsId and newsId != null and newsId != ''">  and  news_id = #{newsId}</if>
+            <!--            <if test="clickDate and clickDate != null and clickDate != ''"> and  click_date = #{clickDate,jdbcType=DATE}</if>-->
+            <!--            <if test="newsId and newsId != null and newsId != ''">  and news_id = #{newsId}</if>-->
+        </where>
+    </select>
+
+</mapper>
